@@ -12,7 +12,7 @@ To run it locally
 To deploy this project run
 
 ```bash
-  conda create --name <env> --file ml_env.txt
+  conda create --name <ml_env> --file ml_env.txt
   conda activate ml_env
   streamlit run app.py
 ```
