@@ -30,19 +30,22 @@ bath = st.number_input("Number of Bathrooms", min_value=1, max_value=10, step=1)
 balcony = st.number_input("Number of Balconies", min_value=0, max_value=5, step=1)
 
 if st.button("Predict"):
-    area_enc = le_area.transform([area])[0]
-    location_enc = le_location.transform([location])[0]
-    availability_enc = encode_avail(availability)
+    if bath>size:
+        st.error("The number of bathrooms entered are greater than the number of rooms in the house. Please update the values correctly to proceed")
+    else:
+        area_enc = le_area.transform([area])[0]
+        location_enc = le_location.transform([location])[0]
+        availability_enc = encode_avail(availability)
 
-    raw_input = np.array([[area_enc, location_enc, availability_enc, size, total_sqft, bath, balcony]])
+        raw_input = np.array([[area_enc, location_enc, availability_enc, size, total_sqft, bath, balcony]])
 
-    scaled_input_std = scaler_X_std.transform(raw_input)
-    scaled_input_minmax = scaler_X_minmax.transform(scaled_input_std)
+        scaled_input_std = scaler_X_std.transform(raw_input)
+        scaled_input_minmax = scaler_X_minmax.transform(scaled_input_std)
 
-    price_pred = model.predict(scaled_input_minmax)
-    actual_price = scaler_y_minmax.inverse_transform(price_pred.reshape(-1, 1))[0][0]
+        price_pred = model.predict(scaled_input_minmax)
+        actual_price = scaler_y_minmax.inverse_transform(price_pred.reshape(-1, 1))[0][0]
 
-    #st.write("Raw model prediction (scaled):", price_pred)
-    #st.write("Final actual price:", actual_price)
+        #st.write("Raw model prediction (scaled):", price_pred)
+        #st.write("Final actual price:", actual_price)
 
-    st.success(f"🏠 Predicted House Price: ₹{actual_price:,.2f}")
+        st.success(f"🏠 Predicted House Price: ₹{actual_price:,.2f}")
