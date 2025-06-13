@@ -48,4 +48,4 @@ if st.button("Predict"):
         #st.write("Raw model prediction (scaled):", price_pred)
         #st.write("Final actual price:", actual_price)
 
-        st.success(f"🏠 Predicted House Price: ₹{actual_price:,.2f}")
+        st.success(f"🏠 Predicted House Price: ₹{actual_price:,.2f} Lakhs")
